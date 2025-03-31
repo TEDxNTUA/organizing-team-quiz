@@ -1,12 +1,11 @@
-"use client";
-import { useState } from "react";
-import Quiz from "@components/Quiz"; // Ensure path is correct
+'use client';
+import {useState} from 'react';
+import Quiz from '@components/Quiz';
 
 export default function Home() {
   const [quizStarted, setQuizStarted] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
 
-  // Handler for starting the quiz, ensures name isn't just whitespace
   const handleStartQuiz = () => {
     if (name.trim()) {
       setQuizStarted(true);
@@ -14,25 +13,22 @@ export default function Home() {
   };
 
   return (
-    // Main container: Full height, light gray background, flex column, centered items/content
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 font-sans">
       {quizStarted ? (
         <Quiz name={name.trim()} />
       ) : (
         <div className="w-full max-w-md bg-white shadow-xl rounded-xl p-6 md:p-8 text-center">
           <div className="mb-8">
-            {" "}
+            {' '}
             <h1 className="text-4xl md:text-5xl font-bold text-red-600 mb-2">
-              {" "}
-              TEDx<span className="text-gray-900">NTUA</span>{" "}
+              {' '}
+              TEDx<span className="text-gray-900">NTUA</span>{' '}
             </h1>
-            <h3 className="text-xl md:text-2xl font-medium text-gray-600">
-              Organizing Team Quiz
-            </h3>
+            <h3 className="text-xl md:text-2xl font-medium text-gray-600">Organizing Team Quiz</h3>
           </div>
 
           <div className="mb-6">
-            {" "}
+            {' '}
             <label
               htmlFor="nameInput"
               className="block text-sm font-medium text-gray-700 mb-2 text-left"
@@ -43,7 +39,7 @@ export default function Home() {
               type="text"
               id="nameInput"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
               placeholder="Your Name"
               className="
                 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm
@@ -63,8 +59,8 @@ export default function Home() {
               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400
               ${
                 name.trim()
-                  ? "bg-red-600 hover:bg-red-700 active:bg-red-800 shadow-md hover:shadow-lg active:scale-[0.98]"
-                  : "bg-gray-400 cursor-not-allowed opacity-70"
+                  ? 'bg-red-600 hover:bg-red-700 active:bg-red-800 shadow-md hover:shadow-lg active:scale-[0.98]'
+                  : 'bg-gray-400 cursor-not-allowed opacity-70'
               }
             `}
           >
@@ -72,9 +68,7 @@ export default function Home() {
           </button>
 
           {!name.trim() && (
-            <p className="text-xs text-gray-500 mt-2">
-              Please enter your name to start.
-            </p>
+            <p className="text-xs text-gray-500 mt-2">Please enter your name to start.</p>
           )}
         </div>
       )}
