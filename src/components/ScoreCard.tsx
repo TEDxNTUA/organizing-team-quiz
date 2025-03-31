@@ -1,3 +1,5 @@
+import {TEAMS} from '@data/TeamSet';
+
 export type ScoreCardProps = {
   name: string;
   score: number;
@@ -5,20 +7,17 @@ export type ScoreCardProps = {
 };
 
 function ScoreCard({name, score}: ScoreCardProps) {
-  const getTeam = (scoreValue: number): string => {
+  const getTeam = scoreValue => {
     const numScore = Number(scoreValue);
+    if (isNaN(numScore)) return null;
 
-    if (isNaN(numScore)) return 'Invalid Score';
-
-    if (numScore < 10) return 'IT team';
-    if (numScore >= 10 && numScore < 13) return 'Experience team';
-    if (numScore >= 13 && numScore < 15) return 'Design team';
-    if (numScore >= 15 && numScore < 17) return 'Media and Marketing team';
-    if (numScore >= 17 && numScore < 19) return 'Speakers team';
-    if (numScore >= 19 && numScore < 21) return 'Venue team';
-    if (numScore >= 21 && numScore < 24) return 'Fundraising team';
-    if (numScore >= 24) return 'Curator';
-    return 'Unknown Team';
+    return (
+      TEAMS.find(team => numScore >= team.scoreRange[0] && numScore <= team.scoreRange[1]) || {
+        name: 'Unknown Team',
+        scoreRange: [0, 0],
+        image_url: ''
+      }
+    );
   };
 
   const team = getTeam(score);
@@ -34,9 +33,11 @@ function ScoreCard({name, score}: ScoreCardProps) {
           {' '}
           Based on your answers, the team that might suit you best is:
           <br />
-          <span className="block mt-2 text-xl md:text-2xl font-bold text-red-600"> {team}</span>
+          <span className="block mt-2 text-xl md:text-2xl font-bold text-red-600">
+            {team?.name}
+          </span>
         </p>
-        <p className="text-md text-gray-500 mb-8"> Your final score: {score}</p>
+        <p className="text-md text-gray-500 mb-8"> You also scored: {score}/28</p>
 
         <button
           onClick={() => window.location.reload()}
