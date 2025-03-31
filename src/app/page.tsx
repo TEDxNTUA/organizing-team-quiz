@@ -18,42 +18,39 @@ export default function Home() {
         <Quiz name={name.trim()} />
       ) : (
         <div className="w-full max-w-md bg-white shadow-xl rounded-xl p-6 md:p-8 text-center">
-          <div className="mb-8">
-            {' '}
-            <h1 className="text-4xl md:text-5xl font-bold text-red-600 mb-2">
-              {' '}
-              TEDx<span className="text-gray-900">NTUA</span>{' '}
-            </h1>
-            <h3 className="text-xl md:text-2xl font-medium text-gray-600">Organizing Team Quiz</h3>
-          </div>
+          <div className="flex flex-col gap-16">
+            <h2 className="text-2xl md:text-2xl font-semibold text-gray-900">
+              <span className="text-red-600">TEDx</span>NTUA's Organizing Team Quiz
+            </h2>
 
-          <div className="mb-6">
-            {' '}
-            <label
-              htmlFor="nameInput"
-              className="block text-sm font-medium text-gray-700 mb-2 text-left"
-            >
-              Enter Your Name to Begin:
-            </label>
-            <input
-              type="text"
-              id="nameInput"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              placeholder="Your Name"
-              className="
+            <div className="flex flex-col gap-8">
+              <section id="inputSection">
+                <label
+                  htmlFor="nameInput"
+                  className="block text-sm font-medium text-gray-700 mb-2 text-left"
+                >
+                  Enter Your Name to Begin:
+                </label>
+                <input
+                  type="text"
+                  id="nameInput"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder="Your Name"
+                  className="
                 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm
                 text-gray-900 bg-white focus:outline-none focus:ring-2
                 focus:ring-red-400 focus:border-red-400 transition duration-150 ease-in-out
               "
-              autoFocus
-            />
-          </div>
+                  autoFocus
+                />
+              </section>
 
-          <button
-            onClick={handleStartQuiz}
-            disabled={!name.trim()}
-            className={`
+              <section id="startButton">
+                <button
+                  onClick={handleStartQuiz}
+                  disabled={!name.trim()}
+                  className={`
               w-full px-8 py-3 rounded-lg text-white font-semibold
               transition-all duration-200 ease-in-out
               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400
@@ -63,13 +60,21 @@ export default function Home() {
                   : 'bg-gray-400 cursor-not-allowed opacity-70'
               }
             `}
-          >
-            Start Quiz
-          </button>
+                >
+                  Start Quiz
+                </button>
 
-          {!name.trim() && (
-            <p className="text-xs text-gray-500 mt-2">Please enter your name to start.</p>
-          )}
+                {!name.trim() && (
+                  <p className="text-xs text-gray-500 mt-2">Please enter your name to start.</p>
+                )}
+              </section>
+            </div>
+            <img
+              src="tedxntua-black-logo.png"
+              alt="tedxntua-logo-black"
+              className="w-[180px] h-auto mx-auto"
+            />
+          </div>
         </div>
       )}
     </div>

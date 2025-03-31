@@ -111,6 +111,11 @@ const Quiz = ({name}: QuizProps) => {
                 {currentQuestionIndex === questions.length - 1 ? 'Show My Result' : 'Next Question'}
               </button>
             </div>
+            <img
+              src="tedxntua-black-logo.png"
+              alt="tedxntua-logo-black"
+              className="w-[180px] h-auto mx-auto mt-8"
+            />
           </div>
         ) : (
           <ScoreCard name={name} score={quizScore} />
