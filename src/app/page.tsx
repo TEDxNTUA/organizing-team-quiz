@@ -1,42 +1,82 @@
 "use client";
 import { useState } from "react";
-import Quiz from "@components/Quiz";
+import Quiz from "@components/Quiz"; // Ensure path is correct
 
 export default function Home() {
   const [quizStarted, setQuizStarted] = useState(false);
   const [name, setName] = useState("");
 
-  return (
-    <div className="container mt-5 ml-5">
-      <div className="text-center">
-        <h1 className="text-success mtb-1 ">TEDxNTUA</h1>
-        <h3 className="mb-4">Organizing Team Quiz</h3>
-      </div>
+  // Handler for starting the quiz, ensures name isn't just whitespace
+  const handleStartQuiz = () => {
+    if (name.trim()) {
+      setQuizStarted(true);
+    }
+  };
 
+  return (
+    // Main container: Full height, light gray background, flex column, centered items/content
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 font-sans">
       {quizStarted ? (
-        <Quiz name={name} />
+        <Quiz name={name.trim()} />
       ) : (
-        <>
-          <div className="mb-3 w-[300px] mx-auto">
-            <label htmlFor="nameInput" className="form-label">
-              Enter Your Name:
+        <div className="w-full max-w-md bg-white shadow-xl rounded-xl p-6 md:p-8 text-center">
+          <div className="mb-8">
+            {" "}
+            <h1 className="text-4xl md:text-5xl font-bold text-red-600 mb-2">
+              {" "}
+              TEDx<span className="text-gray-900">NTUA</span>{" "}
+            </h1>
+            <h3 className="text-xl md:text-2xl font-medium text-gray-600">
+              Organizing Team Quiz
+            </h3>
+          </div>
+
+          <div className="mb-6">
+            {" "}
+            <label
+              htmlFor="nameInput"
+              className="block text-sm font-medium text-gray-700 mb-2 text-left"
+            >
+              Enter Your Name to Begin:
             </label>
             <input
               type="text"
-              className="form-control border-black border-2 rounded-md bg-amber-50"
               id="nameInput"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Your Name"
+              className="
+                w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm
+                text-gray-900 bg-white focus:outline-none focus:ring-2
+                focus:ring-red-400 focus:border-red-400 transition duration-150 ease-in-out
+              "
+              autoFocus
             />
           </div>
+
           <button
-            onClick={() => setQuizStarted(true)}
-            className="btn btn-primary"
-            disabled={!name.trim()} // Disable button if name is empty or whitespace
+            onClick={handleStartQuiz}
+            disabled={!name.trim()}
+            className={`
+              w-full px-8 py-3 rounded-lg text-white font-semibold
+              transition-all duration-200 ease-in-out
+              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400
+              ${
+                name.trim()
+                  ? "bg-red-600 hover:bg-red-700 active:bg-red-800 shadow-md hover:shadow-lg active:scale-[0.98]"
+                  : "bg-gray-400 cursor-not-allowed opacity-70"
+              }
+            `}
           >
             Start Quiz
           </button>
-        </>
+
+          {!name.trim() && (
+            <p className="text-xs text-gray-500 mt-2">
+              Please enter your name to start.
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

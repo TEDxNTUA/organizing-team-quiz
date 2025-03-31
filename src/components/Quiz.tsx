@@ -2,30 +2,37 @@ import { useState } from "react";
 import { QUIZ } from "@data/QuestionSet";
 import ScoreCard from "@components/ScoreCard";
 
+interface Answer {
+  text: string;
+  score: number;
+}
 interface QuizProps {
   name: string;
 }
 
 const Quiz = ({ name }: QuizProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState({
-    text: "",
-    score: 0,
-  });
-  // const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null);
   const [answerChecked, setAnswerChecked] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
 
   const { questions } = QUIZ;
-  const { question, answers } = questions[currentQuestionIndex];
+  if (!questions || questions.length === 0) {
+    return <div>Error: No questions loaded.</div>;
+  }
+  // Add boundary check for currentQuestionIndex
+  const safeIndex = Math.min(currentQuestionIndex, questions.length - 1);
+  const { question, answers } = questions[safeIndex];
 
-  const onAnswerSelected = (answer) => {
+  const onAnswerSelected = (answer: Answer) => {
     setSelectedAnswer(answer);
     setAnswerChecked(true);
   };
 
   const handleNextQuestion = () => {
+    if (!selectedAnswer) return;
+
     setQuizScore((prev) => prev + selectedAnswer.score);
     const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
@@ -33,44 +40,74 @@ const Quiz = ({ name }: QuizProps) => {
       setShowResults(true);
     } else {
       setCurrentQuestionIndex((prev) => prev + 1);
-      setSelectedAnswer({ text: "", score: 0 });
+      setSelectedAnswer(null);
       setAnswerChecked(false);
     }
+  };
 
-    // console.log(
-    //   `Answer after click ${selectedAnswer.text} with score ${selectedAnswer.score} added. Is last: ${isLastQuestion}`
-    // );
+  const getAnswerClasses = (answer: Answer) => {
+    const isSelected = selectedAnswer?.text === answer.text;
+
+    let baseClasses = `
+      p-3 my-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out
+      text-gray-800 bg-white border-gray-300 shadow-sm
+      hover:bg-gray-100 hover:border-gray-400 hover:shadow-md
+      focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-300`;
+
+    let selectedClasses = `
+      bg-red-600 border-red-700 text-black font-semibold shadow-lg
+      ring-2 ring-offset-1 ring-red-400 `;
+
+    return `${baseClasses} ${isSelected ? selectedClasses : ""}`;
   };
 
   return (
-    <div className="container mt-5">
-      <div>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-[300px] sm:w-[400px] max-w-md">
+        {" "}
         {!showResults ? (
-          <div className="card p-4 w-[300px] mx-auto bg-blue-100">
-            <h4>{question}</h4>
-            <ul className="list-group bg-blue-500">
+          <div className="shadow-xl rounded-xl p-6 md:p-8">
+            {" "}
+            <div className="text-right text-sm font-medium text-gray-500 mb-4">
+              Question {currentQuestionIndex + 1} / {questions.length}
+            </div>
+            {/* Question Text */}
+            <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center">
+              {question}
+            </h4>
+            {/* Answers List */}
+            <ul className="list-none p-0 mb-6">
               {answers.map((answer) => (
                 <li
                   key={answer.text}
                   onClick={() => onAnswerSelected(answer)}
-                  className="list-group-item cursor-pointer "
+                  className={getAnswerClasses(answer)}
+                  tabIndex={0}
+                  onKeyPress={(e) =>
+                    e.key === "Enter" && onAnswerSelected(answer)
+                  }
                 >
                   {answer.text}
                 </li>
               ))}
             </ul>
-            <div className="d-flex justify-content-between mt-3">
-              <b>
-                Question
-                {currentQuestionIndex + 1}/{questions.length}
-              </b>
+            <div className="mt-6 text-center">
               <button
                 onClick={handleNextQuestion}
-                className="btn btn-primary"
+                className={`
+                  w-full md:w-auto px-8 py-3 rounded-lg text-white font-semibold
+                  transition-all duration-200 ease-in-out
+                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400
+                  ${
+                    answerChecked
+                      ? "bg-red-600 hover:bg-red-700 active:bg-red-800 shadow-md hover:shadow-lg hover:cursor-pointer active:scale-[0.98]" // Use Tailwind's red or your tedRed hex
+                      : "bg-gray-400 cursor-not-allowed opacity-70"
+                  }
+                `}
                 disabled={!answerChecked}
               >
                 {currentQuestionIndex === questions.length - 1
-                  ? "Submit"
+                  ? "Show My Result"
                   : "Next Question"}
               </button>
             </div>
