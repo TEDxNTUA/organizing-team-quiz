@@ -1,8 +1,8 @@
 export type Question = {
   id: number;
   question: string;
+  image_url: string;
   answers: { text: string; score: number }[];
-  correctAnswer: string;
 };
 
 export type Quiz = {
