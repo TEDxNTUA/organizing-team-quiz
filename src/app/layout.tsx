@@ -14,7 +14,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'TEDxNTUA Quiz',
-  description: "A quiz to gauge which of the 8 TEDxNTUA's organizing team fits you best."
+  description: "A quiz to gauge which of the 8 TEDxNTUA's organizing team fits you best.",
+  icons: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      url: './favicons/favicon-32x32.png'
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      url: './favicons/favicon-16x16.png'
+    }
+  ]
 };
 
 export default function RootLayout({
