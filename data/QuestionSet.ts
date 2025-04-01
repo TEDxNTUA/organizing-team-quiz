@@ -77,7 +77,7 @@ export const QUIZ: Quiz = {
       id: 7,
       question: 'Favourite Cheat Meal',
       image_url:
-        'https://images.unsplash.com/photo-1676291920753-dd019397927a?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1597564684442-b603ab8dcdcf?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       answers: [
         {text: 'Σουβλάκι', score: 3},
         {text: 'Πίτσα', score: 1},
