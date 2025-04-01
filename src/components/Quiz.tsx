@@ -63,7 +63,7 @@ const Quiz = ({name}: QuizProps) => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-[300px] sm:w-[400px] max-w-md">
+      <div className="w-[85%] max-w-[600px] mx-auto">
         {!showResults ? (
           <div className="shadow-xl rounded-xl p-6 md:p-8 bg-white">
             <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center">
