@@ -22,8 +22,8 @@ const getTeam = scoreValue => {
 function ScoreCard({name, score}: ScoreCardProps) {
   const team = getTeam(score);
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white shadow-xl rounded-xl p-6 md:p-8 w-full max-w-md text-center">
+    <div className="min-h-screen w-full max-w-md bg-gray-50 flex items-center justify-center p-4">
+      <div className="bg-white shadow-xl rounded-xl p-6 md:p-8 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
           Great Job, <span className="text-red-600">{name}</span>!
         </h2>

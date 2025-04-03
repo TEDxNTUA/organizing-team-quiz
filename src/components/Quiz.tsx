@@ -62,41 +62,40 @@ const Quiz = ({name}: QuizProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-[85%] max-w-[600px] mx-auto">
-        {!showResults ? (
-          <div className="shadow-xl rounded-xl p-6 md:p-8 bg-white">
-            <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center">
-              {question}
-            </h4>
-            {image_url && (
-              <div className="w-full h-[180px] mb-4 rounded-lg overflow-hidden">
-                <img src={image_url} alt="Question visual" className="w-full h-full object-cover" />
-              </div>
-            )}
-
-            <div className="text-right text-sm font-medium text-gray-500 mb-4">
-              Question {currentQuestionIndex + 1} / {questions.length}
+    <div className="mx-auto min-h-screen w-full max-w-md bg-gray-50 flex items-center justify-center p-4">
+      {!showResults ? (
+        <div className="shadow-xl rounded-xl p-6 md:p-8 bg-white">
+          <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center">
+            {question}
+          </h4>
+          {image_url && (
+            <div className="w-full h-[180px] mb-4 rounded-lg overflow-hidden">
+              <img src={image_url} alt="Question visual" className="w-full h-full object-cover" />
             </div>
+          )}
 
-            <ul className="list-none p-0 mb-6">
-              {answers.map(answer => (
-                <li
-                  key={answer.text}
-                  onClick={() => onAnswerSelected(answer)}
-                  className={getAnswerClasses(answer)}
-                  tabIndex={0}
-                  onKeyPress={e => e.key === 'Enter' && onAnswerSelected(answer)}
-                >
-                  {answer.text}
-                </li>
-              ))}
-            </ul>
+          <div className="text-right text-sm font-medium text-gray-500 mb-4">
+            Question {currentQuestionIndex + 1} / {questions.length}
+          </div>
 
-            <div className="mt-6 text-center">
-              <button
-                onClick={handleNextQuestion}
-                className={`
+          <ul className="list-none p-0 mb-6">
+            {answers.map(answer => (
+              <li
+                key={answer.text}
+                onClick={() => onAnswerSelected(answer)}
+                className={getAnswerClasses(answer)}
+                tabIndex={0}
+                onKeyPress={e => e.key === 'Enter' && onAnswerSelected(answer)}
+              >
+                {answer.text}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 text-center">
+            <button
+              onClick={handleNextQuestion}
+              className={`
                   w-full md:w-auto px-8 py-3 rounded-lg text-white font-semibold
                   transition-all duration-200 ease-in-out
                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400
@@ -106,21 +105,20 @@ const Quiz = ({name}: QuizProps) => {
                       : 'bg-gray-400 cursor-not-allowed opacity-70'
                   }
                 `}
-                disabled={!answerChecked}
-              >
-                {currentQuestionIndex === questions.length - 1 ? 'Show My Result' : 'Next Question'}
-              </button>
-            </div>
-            <img
-              src="tedxntua-black-logo.png"
-              alt="tedxntua-logo-black"
-              className="w-[180px] h-auto mx-auto mt-8"
-            />
+              disabled={!answerChecked}
+            >
+              {currentQuestionIndex === questions.length - 1 ? 'Show My Result' : 'Next Question'}
+            </button>
           </div>
-        ) : (
-          <ScoreCard name={name} score={quizScore} />
-        )}
-      </div>
+          <img
+            src="tedxntua-black-logo.png"
+            alt="tedxntua-logo-black"
+            className="w-[180px] h-auto mx-auto mt-8"
+          />
+        </div>
+      ) : (
+        <ScoreCard name={name} score={quizScore} />
+      )}
     </div>
   );
 };
